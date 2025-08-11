@@ -1,0 +1,153 @@
+import 'dotenv/config';
+
+export const config = {
+  server: {
+    env: process.env.NODE_ENV || 'development',
+    protocol: process.env.PROTOCOL || 'http',
+    host: process.env.HOST || 'localhost',
+    port: parseInt(process.env.PORT) || 3000,
+  },
+  db: {
+    host: process.env.DB_HOST || 'localhost',
+    port: parseInt(process.env.DB_PORT) || 5432,
+    user: process.env.DB_USER || 'postgres',
+    password: process.env.DB_PASSWORD || '',
+    database: process.env.DB_DATABASE || 'wawita_db',
+
+    paginationDefaults: {
+      defaultLimit: parseInt(process.env.PAGINATION_DEFAULT_LIMIT) || 10,
+      defaultPage: parseInt(process.env.PAGINATION_DEFAULT_PAGE) || 1,
+      maxLimit: parseInt(process.env.PAGINATION_MAX_LIMIT) || 100,
+      maxPage: parseInt(process.env.PAGINATION_MAX_PAGE) || 1000,
+      type: 'offset',
+    },
+
+    tables: {
+      users: {
+        name: 'users',
+        allowedColumns: [
+          'id',
+          'email',
+          'password_hash',
+          'is_active',
+          'created_at',
+          'updated_at',
+        ],
+        allowedFilters: [
+          'id',
+          'email',
+          'is_active',
+          'created_at',
+          'updated_at',
+        ],
+        allowedOrderBy: [
+          'id',
+          'email',
+          'is_active',
+          'created_at',
+          'updated_at',
+        ],
+        defaultFilters: [{ field: 'is_active', operator: '=', value: 'true' }],
+        defaultOrderBy: 'id',
+      },
+      userProfiles: {
+        name: 'user_profiles',
+        allowedColumns: [
+          'id',
+          'user_id',
+          'fullname',
+          'nickname',
+          'avatar_url',
+          'biography',
+          'created_at',
+          'updated_at',
+        ],
+        allowedFilters: [
+          'id',
+          'user_id',
+          'fullname',
+          'nickname',
+          'created_at',
+          'updated_at',
+        ],
+        allowedOrderBy: [
+          'id',
+          'user_id',
+          'fullname',
+          'nickname',
+          'created_at',
+          'updated_at',
+        ],
+        defaultFilters: [],
+        defaultOrderBy: 'id',
+      },
+      publications: {
+        name: 'publications',
+        allowedColumns: [
+          'id',
+          'user_profile_id',
+          'title',
+          'short_description',
+          'full_description',
+          'category_id',
+          'price',
+          'stock',
+          'condition',
+          'status',
+          'created_at',
+          'updated_at',
+        ],
+        allowedFilters: [
+          'id',
+          'user_profile_id',
+          'title',
+          'category_id',
+          'price',
+          'stock',
+          'condition',
+          'status',
+          'created_at',
+          'updated_at',
+        ],
+        allowedOrderBy: [
+          'id',
+          'user_profile_id',
+          'category_id',
+          'price',
+          'stock',
+          'condition',
+          'status',
+          'created_at',
+          'updated_at',
+        ],
+        defaultFilters: [
+          { field: 'status', operator: '=', value: 'activa' },
+          { field: 'condition', operator: '=', value: 'nuevo' },
+        ],
+        defaultOrderBy: 'id',
+      },
+    },
+  },
+  jwt: {
+    secret: process.env.JWT_SECRET || 'default_secret_key',
+    expiresIn: process.env.JWT_EXPIRES_IN || '15m',
+    refreshSecret:
+      process.env.JWT_REFRESH_SECRET || 'default_refresh_secret_key',
+    refreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN || '7d',
+  },
+  auth: {
+    saltRounds: parseInt(process.env.SALT_ROUNDS) || 10,
+    tokenHeader: process.env.TOKEN_HEADER || 'Authorization',
+    cookieName: process.env.COOKIE_NAME || 'auth_token',
+    corsOrigins: process.env.CORS_ORIGINS?.split(',') || [
+      'http://localhost:3000',
+    ],
+  },
+  api: {
+    prefix: process.env.API_PREFIX || '/api',
+    version: process.env.API_VERSION || 'v1',
+  },
+  paths: {
+    logsDir: process.env.LOGS_DIR || 'logs',
+  },
+};

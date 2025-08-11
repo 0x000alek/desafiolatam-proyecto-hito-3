@@ -1,0 +1,17 @@
+export default {
+  collectCoverageFrom: ['**/*.js'],
+  coveragePathIgnorePatterns: ['/node_modules/'],
+  coverageThreshold: {
+    global: {
+      statements: 100,
+      branches: 100,
+      functions: 100,
+      lines: 100,
+    },
+  },
+  reporters: ['default'],
+  setupFilesAfterEnv: ['<rootDir>/test/setup.js'],
+  transform: {
+    '^.+\\.js$': 'babel-jest',
+  },
+};
